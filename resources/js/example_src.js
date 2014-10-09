@@ -1,27 +1,18 @@
 'use strict';
 
-var navigationHeader = require('../../index'),
-	periodicalNavigation;
+var ComponentTabs = require('../../index'),
+	componentTab1;
 
-var navEvents = function () {
-	periodicalNavigation.on('navigationInitialized', function () {
-		console.log('nav loaded');
-	});
-	periodicalNavigation.on('navigationShowEvent', function () {
-		console.log('nav shown');
-	});
-	periodicalNavigation.on('navigationSubNavShowEvent', function () {
-		console.log('nav sub nav shown');
-	});
-	periodicalNavigation.on('navigationHideNavShowEvent', function () {
-		console.log('nav hide sub nav');
+var tabEvents = function () {
+	componentTab1.on('tabsShowIndex', function (index) {
+		console.log('tab show index', index);
 	});
 };
 
 window.addEventListener('load', function () {
-	periodicalNavigation = new navigationHeader({
-		idSelector: 'ha-header'
-	});
-	navEvents();
-	window.periodicalNavigation = periodicalNavigation;
+	var tabelement = document.getElementById('tabs');
+	componentTab1 = new ComponentTabs(tabelement);
+	tabEvents();
+
+	window.componentTab1 = componentTab1;
 }, false);

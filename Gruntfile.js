@@ -1,6 +1,6 @@
 /*
- * component.navigation-header
- * http://github.com/typesettin/component.navigation-header
+ * component.tabs
+ * http://github.com/typesettin/component.tabs
  *
  * Copyright (c) 2014 Yaw Joseph Etse. All rights reserved.
  */
@@ -36,7 +36,7 @@ module.exports = function (grunt) {
 			]
 		},
 		jsbeautifier: {
-			files: ['<%= jshint.all %>', '!resources/template/component_navigation_header.ejs'],
+			files: ['<%= jshint.all %>', '!resources/template/component_tabs.ejs'],
 			options: {
 				config: '.jsbeautify'
 			}
@@ -106,7 +106,8 @@ module.exports = function (grunt) {
 					compress: true
 				},
 				files: {
-					'example/stylesheets/component.navigation-header.css': 'resources/stylesheets/component.navigation-header.less'
+					'example/stylesheets/component.tabs.css': 'resources/stylesheets/component.tabs.less',
+					'example/stylesheets/example.css': 'resources/stylesheets/example.less'
 				}
 			}
 		},

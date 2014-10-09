@@ -1,233 +1,115 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*
- * component.navigation-header
- * http://github.amexpub.com/modules/component.navigation-header
+ * component.tabs
+ * http://github.amexpub.com/modules/component.tabs
  *
  * Copyright (c) 2013 AmexPub. All rights reserved.
  */
 
 'use strict';
 
-module.exports = require('./lib/component.navigation-header');
+module.exports = require('./lib/component.tabs');
 
-},{"./lib/component.navigation-header":2}],2:[function(require,module,exports){
+},{"./lib/component.tabs":2}],2:[function(require,module,exports){
 /*
- * component.navigation-header
+ * component.tabs
  * http://github.amexpub.com/modules
  *
  * Copyright (c) 2014 Yaw Joseph Etse. All rights reserved.
  */
 'use strict';
 
-var classie = require('classie'),
-	extend = require('util-extend'),
+var extend = require('util-extend'),
 	events = require('events'),
 	util = require('util');
 
-var getEventTarget = function (e) {
-	// e = e || window.event;
-	return e.target || e.srcElement;
-};
-
-var navigationHeader = function (config) {
+/**
+ * A module that represents a componentTabs object, a componentTab is a page composition tool.
+ * @{@link https://github.com/typesettin/component.tabs}
+ * @author Yaw Joseph Etse
+ * @copyright Copyright (c) 2014 Typesettin. All rights reserved.
+ * @license MIT
+ * @constructor componentTabs
+ * @requires module:util-extent
+ * @requires module:util
+ * @requires module:events
+ * @param {object} el element of tab container
+ * @param {object} options configuration options
+ */
+var componentTabs = function (el, options) {
 	events.EventEmitter.call(this);
 
-	this.navStyles = ['ha-header-large', 'ha-header-small', 'ha-header-hide', 'ha-header-show', 'ha-header-subshow', 'ha-header-shrink', 'ha-header-rotate', 'ha-header-rotateBack', 'ha-header-color', 'ha-header-box', 'ha-header-fullscreen', 'ha-header-subfullscreen'];
-	this.emit('navigationInitialized');
-	this.subNavStyles = {
-		0: 4,
-		1: 4,
-		2: 4,
-		5: 6,
-		7: 6,
-		8: 11,
-		9: 11,
-		10: 11
-	};
-
-	this.init = function (options) {
-		return this._init(options);
-	};
-	this.showNav = function (style) {
-		return this._showNav(style);
-	};
-	this.showSubNav = function (subnavToShow) {
-		return this._showSubNav(subnavToShow);
-	};
-	this.hideSubNav = function () {
-		return this._hideSubNav();
-	};
-
-	this.init(config);
+	this.el = el;
+	this.options = extend({}, this.options);
+	extend(this.options, options);
+	this.showTab = this._show;
+	this._init();
 };
 
-util.inherits(navigationHeader, events.EventEmitter);
+util.inherits(componentTabs, events.EventEmitter);
 
-navigationHeader.prototype._init = function (options) {
-	var defaults = {
-		idSelector: 'ha-header',
-		navStyle: 7,
-		subNavStyle: 6
-	};
-	options = options || {};
-	this.options = extend(defaults, options);
-	this.options.element = this.options.idSelector;
-	this.$el = document.getElementById(this.options.element);
+/** module default configuration */
+componentTabs.prototype.options = {
+	start: 0,
+	tabselector: 'nav > ul > li',
+	itemselector: '.content > section',
+	currenttabclass: 'tab-current',
+	currentitemclass: 'content-current'
+};
+/**
+ * initializes tabs and shows current tab.
+ * @emits tabsInitialized
+ */
+componentTabs.prototype._init = function () {
+	// tabs elemes
+	this.tabs = [].slice.call(this.el.querySelectorAll(this.options.tabselector));
+	// content items
+	this.items = [].slice.call(this.el.querySelectorAll(this.options.itemselector));
+	// current index
+	this.current = -1;
+	// show current content item
+	this._show();
+	// init events
 	this._initEvents();
-	this.emit('navigationInitialized');
+	if (this.options.callback) {
+		this.options.callback();
+	}
+	this.emit('tabsInitialized');
+
 };
-navigationHeader.prototype.getOptions = function () {
-	return this.options;
-};
-navigationHeader.prototype._config = function () {
-	// the list of items
-	this.$list = this.$el.getElementsByTagName('ul')[0];
-	this.$items = this.$list.getElementsByTagName('li');
-	this.current = 0;
-	this.old = 0;
-};
-navigationHeader.prototype._initEvents = function () {
-	var self = this,
-		openSubNav = function (event) {
-			// console.log('moving on nav');
-			var target = getEventTarget(event);
-			if (classie.hasClass(target, 'has-sub-nav')) {
-				self.showSubNav(target.getAttribute('data-navitr'));
-				self.$navbar.removeEventListener('mousemove', openSubNav);
-			}
-		};
-	this.$navbar = document.getElementById(this.options.element + '-nav-id');
-	this.$subnavbar = document.getElementById(this.options.element + '-subnav-id');
-	this.$navbar.addEventListener('mousemove', openSubNav);
-	this.$subnavbar.addEventListener('mouseleave', function () {
-		self.hideSubNav();
-		self.$navbar.addEventListener('mousemove', openSubNav);
+/**
+ * handle tab click events.
+ */
+componentTabs.prototype._initEvents = function () {
+	var self = this;
+
+	this.tabs.forEach(function (tab, idx) {
+		tab.addEventListener('click', function (ev) {
+			ev.preventDefault();
+			self._show(idx);
+		});
 	});
+	this.emit('tabsEventsInitialized');
 };
-navigationHeader.prototype._showNav = function (style) {
-	if (typeof style === 'number') {
-		this.$el.setAttribute('class', 'ha-header ' + this.navStyles[style]);
-		this.options.navStyle = style;
-		this.emit('navigationShowEvent');
-	}
-};
-navigationHeader.prototype._showSubNav = function (subnavToShow) {
-	var subNavItems = this.$subnavbar.getElementsByTagName('nav');
-	for (var x in subNavItems) {
-		if (subNavItems[x].style) {
-			subNavItems[x].style.display = 'none';
-			if (subNavItems[x].getAttribute('data-itr') === subnavToShow) {
-				subNavItems[x].style.display = 'block';
-			}
-		}
-	}
-	var subnavid = this.subNavStyles[this.options.navStyle.toString()];
-	this.$el.setAttribute('class', 'ha-header ' + this.navStyles[subnavid]);
-	this.options.subNavStyle = subnavid;
-	this.emit('navigationSubNavShowEvent');
-};
-navigationHeader.prototype._hideSubNav = function () {
-	var navid = this.options.navStyle;
-	this.$el.setAttribute('class', 'ha-header ' + this.navStyles[navid]);
-	this.options.navStyle = navid;
-	this.emit('navigationHideNavShowEvent');
-};
-module.exports = navigationHeader;
-
-},{"classie":3,"events":5,"util":9,"util-extend":10}],3:[function(require,module,exports){
-/*
- * classie
- * http://github.amexpub.com/modules/classie
- *
- * Copyright (c) 2013 AmexPub. All rights reserved.
+/**
+ * Sets up a new lintotype component.
+ * @param {number} idx tab to show
+ * @emits tabsShowIndex
  */
+componentTabs.prototype._show = function (idx) {
+	if (this.current >= 0) {
+		this.tabs[this.current].className = '';
+		this.items[this.current].className = '';
+	}
+	// change current
+	this.current = idx !== undefined ? idx : this.options.start >= 0 && this.options.start < this.items.length ? this.options.start : 0;
+	this.tabs[this.current].className = this.options.currenttabclass;
+	this.items[this.current].className = this.options.currentitemclass;
+	this.emit('tabsShowIndex', this.current);
+};
+module.exports = componentTabs;
 
-module.exports = require('./lib/classie');
-
-},{"./lib/classie":4}],4:[function(require,module,exports){
-/*!
- * classie - class helper functions
- * from bonzo https://github.com/ded/bonzo
- * 
- * classie.has( elem, 'my-class' ) -> true/false
- * classie.add( elem, 'my-new-class' )
- * classie.remove( elem, 'my-unwanted-class' )
- * classie.toggle( elem, 'my-class' )
- */
-
-/*jshint browser: true, strict: true, undef: true */
-/*global define: false */
-'use strict';
-
-  // class helper functions from bonzo https://github.com/ded/bonzo
-
-  function classReg( className ) {
-    return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
-  }
-
-  // classList support for class management
-  // altho to be fair, the api sucks because it won't accept multiple classes at once
-  var hasClass, addClass, removeClass;
-
-  if (typeof document === "object" && 'classList' in document.documentElement ) {
-    hasClass = function( elem, c ) {
-      return elem.classList.contains( c );
-    };
-    addClass = function( elem, c ) {
-      elem.classList.add( c );
-    };
-    removeClass = function( elem, c ) {
-      elem.classList.remove( c );
-    };
-  }
-  else {
-    hasClass = function( elem, c ) {
-      return classReg( c ).test( elem.className );
-    };
-    addClass = function( elem, c ) {
-      if ( !hasClass( elem, c ) ) {
-        elem.className = elem.className + ' ' + c;
-      }
-    };
-    removeClass = function( elem, c ) {
-      elem.className = elem.className.replace( classReg( c ), ' ' );
-    };
-  }
-
-  function toggleClass( elem, c ) {
-    var fn = hasClass( elem, c ) ? removeClass : addClass;
-    fn( elem, c );
-  }
-
-  var classie = {
-    // full names
-    hasClass: hasClass,
-    addClass: addClass,
-    removeClass: removeClass,
-    toggleClass: toggleClass,
-    // short names
-    has: hasClass,
-    add: addClass,
-    remove: removeClass,
-    toggle: toggleClass
-  };
-
-  // transport
-
-  if ( typeof module === "object" && module && typeof module.exports === "object" ) {
-    // commonjs / browserify
-    module.exports = classie;
-  } else {
-    // AMD
-    define(classie);
-  }
-
-  // If there is a window object, that at least has a document property,
-  // define classie
-  if ( typeof window === "object" && typeof window.document === "object" ) {
-    window.classie = classie;
-  }
-},{}],5:[function(require,module,exports){
+},{"events":3,"util":7,"util-extend":8}],3:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -530,7 +412,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],6:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -555,7 +437,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],7:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -620,14 +502,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],8:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],9:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -1217,7 +1099,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":8,"_process":7,"inherits":6}],10:[function(require,module,exports){
+},{"./support/isBuffer":6,"_process":5,"inherits":4}],8:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1252,33 +1134,24 @@ function extend(origin, add) {
   return origin;
 }
 
-},{}],11:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
-var navigationHeader = require('../../index'),
-	periodicalNavigation;
+var ComponentTabs = require('../../index'),
+	componentTab1;
 
-var navEvents = function () {
-	periodicalNavigation.on('navigationInitialized', function () {
-		console.log('nav loaded');
-	});
-	periodicalNavigation.on('navigationShowEvent', function () {
-		console.log('nav shown');
-	});
-	periodicalNavigation.on('navigationSubNavShowEvent', function () {
-		console.log('nav sub nav shown');
-	});
-	periodicalNavigation.on('navigationHideNavShowEvent', function () {
-		console.log('nav hide sub nav');
+var tabEvents = function () {
+	componentTab1.on('tabsShowIndex', function (index) {
+		console.log('tab show index', index);
 	});
 };
 
 window.addEventListener('load', function () {
-	periodicalNavigation = new navigationHeader({
-		idSelector: 'ha-header'
-	});
-	navEvents();
-	window.periodicalNavigation = periodicalNavigation;
+	var tabelement = document.getElementById('tabs');
+	componentTab1 = new ComponentTabs(tabelement);
+	tabEvents();
+
+	window.componentTab1 = componentTab1;
 }, false);
 
-},{"../../index":1}]},{},[11]);
+},{"../../index":1}]},{},[9]);

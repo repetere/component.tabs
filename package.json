@@ -1,6 +1,6 @@
 {
   "title": "Periodical Theme Component Navigation header",
-  "name": "periodicjs.theme-component.navigation-header",
+  "name": "periodicjs.component.tabs",
   "description": "The header is composed of various effects. It has a perspective wrapper, a front and a bottom (for the 3d rotation)",
   "version": "0.1.1",
   "main": "index.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:typesettin/component.navigation-header.git"
+    "url": "git@github.com:typesettin/component.tabs.git"
   },
   "dependencies": {
     "classie": ">=0.1.0",
