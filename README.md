@@ -3,6 +3,8 @@
 100% width tabbed content with some example media queries for smaller screens.
  Inspired by [Responsive full width tabs](http://tympanus.net/codrops/2014/03/21/responsive-full-width-tabs/)
 
+ [API Documenation](https://github.com/typesettin/component.tabs/blob/master/doc/api.md)
+
 ## Example
 
 Check out `example/index.html`, the example javascript for the example page is `resources/js/example_src.js`
