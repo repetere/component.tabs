@@ -1,71 +1,164 @@
-<!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Component.tabs by typesettin</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Component.tabs</h1>
-        <p>100% width tabbed content with some example media queries for smaller screens.</p>
+<head>
+  <title>Component Tabs</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/example.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/component.tabs.css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src='js/example.min.js'></script>
+</head>
 
-        <p class="view"><a href="https://github.com/typesettin/component.tabs">View the Project on GitHub <small>typesettin/component.tabs</small></a></p>
+<body>
+  <div class="container">
+    <header class="clearfix">
+      <h1>CommonJS/Browserified Responsive Full Width Tabs</h1>
+      <p>100% width tabbed content with some example media queries for smaller screens.</p>
+      <p>Ported from CoDrops: <a href="http://tympanus.net/codrops/2014/03/21/responsive-full-width-tabs/">RESPONSIVE FULL WIDTH TABS</a>
+      </p>
+      <h3>Full API <a href="http://typesettin.github.io/component.tabs/api/html">documentation</a>
+      </h3>
 
-
+    </header>
+    <div id="tabs" class="tabs">
+      <nav>
         <ul>
-          <li><a href="https://github.com/typesettin/component.tabs/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/typesettin/component.tabs/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/typesettin/component.tabs">View On <strong>GitHub</strong></a></li>
+          <li>
+            <a href="#section-1" class="icon-shop">
+              <span>Shop</span>
+            </a>
+          </li>
+          <li>
+            <a href="#section-2" class="icon-cup">
+              <span>Drinks</span>
+            </a>
+          </li>
+          <li>
+            <a href="#section-3" class="icon-food">
+              <span>Food</span>
+            </a>
+          </li>
+          <li>
+            <a href="#section-4" class="icon-lab">
+              <span>Lab</span>
+            </a>
+          </li>
+          <li>
+            <a href="#section-5" class="icon-truck">
+              <span>Order</span>
+            </a>
+          </li>
         </ul>
-      </header>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/typesettin">typesettin</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+      </nav>
+      <div class="content">
+        <section id="section-1">
+          <div class="mediabox">
+            <img src="img/01.png" alt="img01" />
+            <h3>Sushi Gumbo Beetroot</h3>
+            <p>Sushi gumbo beet greens corn soko endive gumbo gourd. Parsley shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra wakame tomato.</p>
+          </div>
+          <div class="mediabox">
+            <img src="img/02.png" alt="img02" />
+            <h3>Pea Sprouts Fava Soup</h3>
+            <p>Lotus root water spinach fennel kombu maize bamboo shoot green bean swiss chard seakale pumpkin onion chickpea gram corn pea.</p>
+          </div>
+          <div class="mediabox">
+            <img src="img/03.png" alt="img03" />
+            <h3>Turnip Broccoli Sashimi</h3>
+            <p>Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip.</p>
+          </div>
+        </section>
+        <section id="section-2">
+          <div class="mediabox">
+            <img src="img/04.png" alt="img04" />
+            <h3>Asparagus Cucumber Cake</h3>
+            <p>Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea tomato spring onion azuki bean gourd.</p>
+          </div>
+          <div class="mediabox">
+            <img src="img/05.png" alt="img05" />
+            <h3>Magis Kohlrabi Gourd</h3>
+            <p>Salsify taro catsear garlic gram celery bitterleaf wattle seed collard greens nori. Grape wattle seed kombu beetroot horseradish carrot squash brussels sprout chard.</p>
+          </div>
+          <div class="mediabox">
+            <img src="img/06.png" alt="img06" />
+            <h3>Ricebean Rutabaga</h3>
+            <p>Celery quandong swiss chard chicory earthnut pea potato. Salsify taro catsear garlic gram celery bitterleaf wattle seed collard greens nori.</p>
+          </div>
+        </section>
+        <section id="section-3">
+          <div class="mediabox">
+            <img src="img/02.png" alt="img02" />
+            <h3>Noodle Curry</h3>
+            <p>Lotus root water spinach fennel kombu maize bamboo shoot green bean swiss chard seakale pumpkin onion chickpea gram corn pea.Sushi gumbo beet greens corn soko endive gumbo gourd.</p>
+          </div>
+          <div class="mediabox">
+            <img src="img/06.png" alt="img06" />
+            <h3>Leek Wasabi</h3>
+            <p>Sushi gumbo beet greens corn soko endive gumbo gourd. Parsley shallot courgette tatsoi pea sprouts fava bean collard greens dandelion okra wakame tomato.</p>
+          </div>
+          <div class="mediabox">
+            <img src="img/01.png" alt="img01" />
+            <h3>Green Tofu Wrap</h3>
+            <p>Pea horseradish azuki bean lettuce avocado asparagus okra. Kohlrabi radish okra azuki bean corn fava bean mustard tigernut wasabi tofu broccoli mixture soup.</p>
+          </div>
+        </section>
+        <section id="section-4">
+          <div class="mediabox">
+            <img src="img/03.png" alt="img03" />
+            <h3>Tomato Cucumber Curd</h3>
+            <p>Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea tomato spring onion azuki bean gourd.</p>
+          </div>
+          <div class="mediabox">
+            <img src="img/01.png" alt="img01" />
+            <h3>Mushroom Green</h3>
+            <p>Salsify taro catsear garlic gram celery bitterleaf wattle seed collard greens nori. Grape wattle seed kombu beetroot horseradish carrot squash brussels sprout chard.</p>
+          </div>
+          <div class="mediabox">
+            <img src="img/04.png" alt="img04" />
+            <h3>Swiss Celery Chard</h3>
+            <p>Celery quandong swiss chard chicory earthnut pea potato. Salsify taro catsear garlic gram celery bitterleaf wattle seed collard greens nori.</p>
+          </div>
+        </section>
+        <section id="section-5">
+          <div class="mediabox">
+            <img src="img/02.png" alt="img02" />
+            <h3>Radish Tomato</h3>
+            <p>Catsear cauliflower garbanzo yarrow salsify chicory garlic bell pepper napa cabbage lettuce tomato kale arugula melon sierra leone bologi rutabaga tigernut.</p>
+          </div>
+          <div class="mediabox">
+            <img src="img/06.png" alt="img06" />
+            <h3>Fennel Wasabi</h3>
+            <p>Sea lettuce gumbo grape kale kombu cauliflower salsify kohlrabi okra sea lettuce broccoli celery lotus root carrot winter purslane turnip greens garlic.</p>
+          </div>
+          <div class="mediabox">
+            <img src="img/01.png" alt="img01" />
+            <h3>Red Tofu Wrap</h3>
+            <p>Green horseradish azuki bean lettuce avocado asparagus okra. Kohlrabi radish okra azuki bean corn fava bean mustard tigernut wasabi tofu broccoli mixture soup.</p>
+          </div>
+        </section>
+      </div>
+      <!-- /content -->
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+    <!-- /tabs -->
+    <p class="info">Food Shapes/Icons by <a href="http://psdblast.com/50-food-icon-set-psd">PsdBlast</a>
+    </p>
+  </div>
+  <script>
+  (function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-52892914-6', 'auto');
+  ga('send', 'pageview');
+  </script>
+</body>
+
 </html>
