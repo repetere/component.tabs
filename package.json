@@ -2,7 +2,7 @@
   "title": "Periodical Theme Component Navigation header",
   "name": "periodicjs.component.tabs",
   "description": "The header is composed of various effects. It has a perspective wrapper, a front and a bottom (for the 3d rotation)",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "main": "index.js",
   "engines": {
     "node": ">=0.10.x"
